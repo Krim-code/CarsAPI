@@ -11,4 +11,5 @@ class PostGetForAllOthersForUserOrAdmin(permissions.BasePermission):
                 return obj.author_email == request.user.email or \
                     bool(request.user and request.user.is_staff)
 
+
         return False
