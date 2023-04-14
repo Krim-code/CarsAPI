@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Country, Manufacturer, Car, Comment
+from .permissions import PostGetForAllOthersForUserOrAdmin
 from .serializers import CountrySerializer, ManufacturerSerializer, CarSerializer, CommentSerializer
 
 
@@ -64,7 +65,5 @@ class CarViewSet(ModelViewSet):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [PostGetForAllOthersForUserOrAdmin]
 
-    def perform_create(self, serializer):
-        serializer.save(email_author=self.request.user.email)
