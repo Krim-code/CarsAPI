@@ -1,16 +1,11 @@
 from django.http import HttpResponse
+from drf_excel.renderers import XLSXRenderer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework import status
 from .models import Country, Manufacturer, Car, Comment
 from .serializers import CountrySerializer, ManufacturerSerializer, CarSerializer, CommentSerializer
-
-
-# Create your views here.
-def index(request):
-    return HttpResponse('<h1>Hello!</h1>')
 
 
 class CountryViewSet(ModelViewSet):
