@@ -1,11 +1,11 @@
 import re
 
+from openpyxl.cell import read_only
 from rest_framework import serializers
 from .models import Country, Manufacturer, Car, Comment
 
 
 class CountrySerializer(serializers.ModelSerializer):
-
     manufacturers = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
@@ -19,7 +19,7 @@ class ManufacturerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Manufacturer
-        fields = ('id', 'name', 'country','cars_count')
+        fields = ('id', 'name', 'country', 'cars_count')
 
     def get_cars_count(self, manufacturer):
         return manufacturer.cars.count()
@@ -28,10 +28,11 @@ class ManufacturerSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
     # manufacturer = ManufacturerSerializer()
     comments_count = serializers.SerializerMethodField()
+    comments = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Car
-        fields = ('id', 'name', 'manufacturer', 'start_year', 'end_year', 'comments_count')
+        fields = ('id', 'name', 'manufacturer', 'start_year', 'end_year', 'comments', 'comments_count')
 
     def get_comments_count(self, car):
         return car.comments.count()
