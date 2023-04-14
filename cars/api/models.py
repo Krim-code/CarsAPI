@@ -10,7 +10,7 @@ class Country(models.Model):
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='manufacturers')
 
     def __str__(self):
         return self.name
@@ -18,7 +18,7 @@ class Manufacturer(models.Model):
 
 class Car(models.Model):
     name = models.CharField(max_length=100)
-    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE, related_name='cars')
     start_year = models.IntegerField()
     end_year = models.IntegerField()
 
@@ -28,7 +28,7 @@ class Car(models.Model):
 
 class Comment(models.Model):
     author_email = models.EmailField()
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='comments')
     created_at = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
 
